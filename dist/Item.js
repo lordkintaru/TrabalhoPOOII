@@ -23,13 +23,28 @@ class Item {
         return Item._qtdItem;
     }
     set titulo(titulo) {
-        this._titulo = titulo;
+        if (titulo = this._titulo) {
+            this._titulo = titulo;
+        }
+        else {
+            throw new SyntaxError('O titulo não pode ser igual ao antigo');
+        }
     }
     set autor(autor) {
-        this._autor = autor;
+        if (autor = this._autor) {
+            this._autor = autor;
+        }
+        else {
+            throw new SyntaxError('O autor não pode ser igual ao antigo');
+        }
     }
     set ISBN(ISBN) {
-        this._ISBN = ISBN;
+        if (ISBN = this.ISBN) {
+            this.ISBN = ISBN;
+        }
+        else {
+            throw new SyntaxError('O ISBN não pode ser igual ao antigo');
+        }
     }
     tostring() {
         return `ID: ${this._id}, Titulo: ${this._titulo}, Autor: ${this._autor}, ISBN: ${this._ISBN}`;
