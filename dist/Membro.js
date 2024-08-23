@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class Membro {
     constructor(nome, status = 'inativo') {
         this._status = 'ativo' || 'inativo';
+        this._emprestimos = [];
         this._nome = nome;
         this._status = status;
         this._id = Membro._qtdMembros++;
@@ -19,6 +20,9 @@ class Membro {
     get qtdMembros() {
         return Membro._qtdMembros;
     }
+    get emprestimos() {
+        return this._emprestimos;
+    }
     set nome(nome) {
         if (nome = this._nome) {
             this._nome = nome;
@@ -33,6 +37,14 @@ class Membro {
         }
         else {
             throw new SyntaxError('O status não pode ser igual ao antigo');
+        }
+    }
+    adicionarEmprestimo(emprestimo) {
+        if (Array.isArray(emprestimo)) {
+            this._emprestimos = [...this._emprestimos, ...emprestimo];
+        }
+        else {
+            this._emprestimos = [...this._emprestimos, emprestimo];
         }
     }
     toString() {

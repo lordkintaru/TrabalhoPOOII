@@ -1,15 +1,16 @@
-
+import Item from "./Item";
 abstract class Membro {
 
     protected _nome: string;
     protected _id: number;
     protected _status: string = 'ativo' || 'inativo';
     static _qtdMembros: number = 1;
+    protected _emprestimos: Array<Item> = [];
 
     constructor(nome : string ,status : string = 'inativo') {
         this._nome = nome;
         this._status = status;
-        this._id = Membro._qtdMembros++;
+        this._id = Membro ._qtdMembros++;
     }
 
     get nome(): string {
@@ -23,6 +24,9 @@ abstract class Membro {
     }
     get qtdMembros(): number {
         return Membro._qtdMembros;
+    }
+    get emprestimos(): Array<Item> {
+        return this._emprestimos;
     }
 
     set nome(nome: string) {
@@ -40,6 +44,14 @@ abstract class Membro {
             throw new SyntaxError('O status não pode ser igual ao antigo');
         }
 
+    }
+
+    adicionarEmprestimo(emprestimo: Item | Array<Item>): void {
+        if (Array.isArray(emprestimo)) {
+            this._emprestimos = [...this._emprestimos, ...emprestimo];
+        } else {
+            this._emprestimos = [...this._emprestimos, emprestimo];
+        }
     }
 
     toString(): string {

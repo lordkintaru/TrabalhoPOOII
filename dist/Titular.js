@@ -21,10 +21,11 @@ class Titular extends Membro_1.default {
         }
     }
     removerDependente(dependente) {
-        this._dependentes = this._dependentes.filter((dependente) => dependente.id != dependente.id);
+        this._dependentes = this._dependentes.filter((d) => d.id != dependente.id);
     }
     toString() {
         return super.toString() + `, Dependentes: ${this._dependentes}`;
     }
 }
+exports.default = Titular;
 //# sourceMappingURL=Titular.js.map

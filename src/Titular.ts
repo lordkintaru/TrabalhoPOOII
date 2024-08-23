@@ -25,7 +25,7 @@ class Titular extends Membro{
 
     }
     removerDependente(dependente: Dependente): void {
-        this._dependentes = this._dependentes.filter((dependente) => dependente.id != dependente.id);
+        this._dependentes = this._dependentes.filter((d) => d.id != dependente.id);
     }
 
     toString(): string {
@@ -35,3 +35,5 @@ class Titular extends Membro{
 
     
 }
+
+export default Titular;
