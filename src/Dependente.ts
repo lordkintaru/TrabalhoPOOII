@@ -6,6 +6,10 @@ class Dependente extends Membro{
         super(nome,status);
     }
 
+    toString(): string {
+        return super.toString();
+    }
+
 }
 
 export default Dependente; 

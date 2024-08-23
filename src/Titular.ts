@@ -15,9 +15,23 @@ class Titular extends Membro{
         return this._dependentes;
     } 
 
-    adicionarDependente(dependente: Dependente): void{
-        this._dependentes.push(dependente);
+
+    adicionarDependente(dependente: Dependente | Array<Dependente>) : void{
+        if(Array.isArray(dependente)){
+            this._dependentes = [...this._dependentes,...dependente];
+        }else{
+            this._dependentes = [...this._dependentes,dependente]
+        }
+
     }
+    removerDependente(dependente: Dependente): void {
+        this._dependentes = this._dependentes.filter((dependente) => dependente.id != dependente.id);
+    }
+
+    toString(): string {
+        return super.toString() + `, Dependentes: ${this._dependentes}`;
+    }
+    
 
     
 }

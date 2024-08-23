@@ -13,7 +13,18 @@ class Titular extends Membro_1.default {
         return this._dependentes;
     }
     adicionarDependente(dependente) {
-        this._dependentes.push(dependente);
+        if (Array.isArray(dependente)) {
+            this._dependentes = [...this._dependentes, ...dependente];
+        }
+        else {
+            this._dependentes = [...this._dependentes, dependente];
+        }
+    }
+    removerDependente(dependente) {
+        this._dependentes = this._dependentes.filter((dependente) => dependente.id != dependente.id);
+    }
+    toString() {
+        return super.toString() + `, Dependentes: ${this._dependentes}`;
     }
 }
 //# sourceMappingURL=Titular.js.map

@@ -8,6 +8,9 @@ class Dependente extends Membro_1.default {
     constructor(nome, status) {
         super(nome, status);
     }
+    toString() {
+        return super.toString();
+    }
 }
 exports.default = Dependente;
 //# sourceMappingURL=Dependente.js.map
