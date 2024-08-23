@@ -16,6 +16,9 @@ class RevistaCatalogo {
     buscarPorId(id) {
         return this._revistas.find(revista => revista.id == id);
     }
+    toString() {
+        return this._revistas.toString();
+    }
 }
 exports.default = RevistaCatalogo;
 //# sourceMappingURL=RevistaCatalogo.js.map

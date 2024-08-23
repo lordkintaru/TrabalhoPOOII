@@ -13,7 +13,11 @@ class Livro extends Item {
     }
 
     set categoria(categoria: string) {
-        this._categoria = categoria;
+        if(categoria! = this._categoria){
+            this._categoria = categoria;
+        }else {
+            throw new SyntaxError('A categoria não pode ser igual a antiga');
+        }
     }
 
     toString(): string {

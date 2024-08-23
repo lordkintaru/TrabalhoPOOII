@@ -13,7 +13,12 @@ class Revista extends Item_1.default {
         return this._dataPublicacao;
     }
     set dataPublicacao(dataPublicacao) {
-        this._dataPublicacao = dataPublicacao;
+        if (dataPublicacao = this._dataPublicacao) {
+            this._dataPublicacao = dataPublicacao;
+        }
+        else {
+            throw new SyntaxError('A data de publicação não pode ser igual a antiga');
+        }
     }
     toString() {
         return super.tostring() + `, Data de publicação: ${this._dataPublicacao}`;

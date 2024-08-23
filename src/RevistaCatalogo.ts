@@ -26,7 +26,9 @@ class RevistaCatalogo implements ICatalogo {
         return this._revistas.find(revista => revista.id == id);
     }
 
-
+    toString(): string {
+        return this._revistas.toString();
+    }
 
 }
 

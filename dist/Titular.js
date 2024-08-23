@@ -16,5 +16,4 @@ class Titular extends Membro_1.default {
         this._dependentes.push(dependente);
     }
 }
-this._livros.splice(this._livros.indexOf(livro), 1);
 //# sourceMappingURL=Titular.js.map
