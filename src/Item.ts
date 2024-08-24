@@ -3,6 +3,7 @@ abstract class Item {
     protected _titulo: string;
     protected _autor: string;
     protected _ISBN: number;
+    protected _dataDevolucao: Date | null = null;
     static _qtdItem: number = 1;
 
     constructor(titulo: string, autor: string, ISBN: number) {
@@ -31,6 +32,14 @@ abstract class Item {
         return Item._qtdItem;
 
     }
+    get datatDevolucao(){
+        if(this._dataDevolucao == null){
+            return 'Este Item não foi emprestado'
+        }else{
+            return this._dataDevolucao;
+        }
+    }
+
 
     set titulo(titulo: string) {
         if(titulo! = this._titulo){
@@ -56,7 +65,23 @@ abstract class Item {
         }
 
     }
+    set dataDevolucao(dataDevolucao: Date) {
+        if(dataDevolucao! == this._dataDevolucao){
+            this._dataDevolucao = dataDevolucao;
+        }else{
+            throw new SyntaxError('A data de devolução não pode ser igual a antiga')
+        }
+    }
 
+    verificarAtraso(): boolean {
+        if(this._dataDevolucao == null){
+            return false;
+        }else if(this._dataDevolucao < new Date()){
+            return true;
+        }else{
+            return false;
+        }
+    }
     tostring(): string {
         return `ID: ${this._id}, Titulo: ${this._titulo}, Autor: ${this._autor}, ISBN: ${this._ISBN}`;
     }

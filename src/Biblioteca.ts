@@ -36,5 +36,9 @@ class Biblioteca {
     cadastrarRevista(revista: Revista): void {
         this._revistaCatalogo.adicionar(revista);
     }
+    cadastrarMembro(membro: Membro): void {
+        this._membros.push(membro);
+    }
+
 
 }
