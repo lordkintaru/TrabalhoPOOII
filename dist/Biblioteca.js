@@ -29,5 +29,11 @@ class Biblioteca {
     cadastrarMembro(membro) {
         this._membros.push(membro);
     }
+    removerMembro(membros) {
+        this._membros = this._membros.filter((m) => m.id != membros.id);
+    }
+    realizarEMprestimo(idMembro, idItem) {
+        this._;
+    }
 }
 //# sourceMappingURL=Biblioteca.js.map
