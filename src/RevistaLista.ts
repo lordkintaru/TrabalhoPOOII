@@ -1,7 +1,7 @@
-import ICatalogo from "./ICatalogo";
+import ILista from "./ILista";
 import Revista from "./Revista";
 
-class RevistaCatalogo implements ICatalogo {
+class RevistaLista implements ILista {
 
     private _revistas: Array<Revista>;
 
@@ -33,4 +33,4 @@ class RevistaCatalogo implements ICatalogo {
 }
 
 
-export default RevistaCatalogo
+export default RevistaLista

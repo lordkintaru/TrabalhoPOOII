@@ -21,4 +21,4 @@ class LivroLista {
     }
 }
 exports.default = LivroLista;
-//# sourceMappingURL=LivroCatalogo.js.map
+//# sourceMappingURL=LivroLista.js.map

@@ -1,7 +1,7 @@
-import ICatalogo from "./ICatalogo";
+import ILista from "./ILista";
 import Livro from "./Livro";
 
-class LivroCatalogo implements ICatalogo {
+class LivroLista implements ILista {
     private _livros: Array<Livro>;
 
     constructor(livros : Array<Livro> = Array<Livro>()) {
@@ -32,4 +32,4 @@ class LivroCatalogo implements ICatalogo {
 
 }
 
-export default LivroCatalogo;
+export default LivroLista;
