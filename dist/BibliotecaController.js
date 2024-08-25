@@ -5,11 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const LivroLista_1 = __importDefault(require("./LivroLista"));
 const RevistaLista_1 = __importDefault(require("./RevistaLista"));
+const MembroLista_1 = __importDefault(require("./MembroLista"));
 class BibliotecaController {
-    constructor(livroCatalogo = new LivroLista_1.default(), revistaCatalogo = new RevistaLista_1.default(), membros = Array()) {
+    constructor(livroCatalogo = new LivroLista_1.default(), revistaCatalogo = new RevistaLista_1.default(), membros = new MembroLista_1.default()) {
         this._livroLista = livroCatalogo;
         this._revistaLista = revistaCatalogo;
-        this._membros = membros;
+        this._membrosLista = membros;
     }
     get livroCatalogo() {
         return this._livroLista;
@@ -17,8 +18,8 @@ class BibliotecaController {
     get revistaCatalogo() {
         return this._revistaLista;
     }
-    get membros() {
-        return this._membros;
+    get membrosLista() {
+        return this._membrosLista;
     }
     cadastrarLivro(livro) {
         this._livroLista.adicionar(livro);
@@ -27,18 +28,20 @@ class BibliotecaController {
         this._revistaLista.adicionar(revista);
     }
     cadastrarMembro(membro) {
-        this._membros.push(membro);
+        this._membrosLista.adicionar(membro);
     }
-    removerMembro(membros) {
-        this._membros = this._membros.filter((m) => m.id != membros.id);
+    removerMembro(membro) {
+        this._membrosLista.remover(membro);
     }
-    realizarEmprestimoLivro(idMembro, idLivro) {
-        const membro = this._membros.find((membro) => membro.id === idMembro);
+    realizarEmprestimoLivro(idMembro, idLivro, dataDevolucao) {
+        const membro = this._membrosLista.buscarPorId(idMembro);
         if (membro != undefined) {
             if (membro.status == "ativo") {
                 const livro = this._livroLista.buscarPorId(idLivro);
                 if (livro != undefined) {
+                    livro.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(livro);
+                    this._livroLista.remover(livro);
                     return true;
                 }
                 else {
@@ -53,13 +56,15 @@ class BibliotecaController {
             return false;
         }
     }
-    realizarEmprestimoRevista(idMembro, idRevista) {
-        const membro = this._membros.find((membro) => membro.id === idMembro);
+    realizarEmprestimoRevista(idMembro, idRevista, dataDevolucao) {
+        const membro = this._membrosLista.buscarPorId(idMembro);
         if (membro != undefined) {
             if (membro.status == "ativo") {
                 const revista = this._revistaLista.buscarPorId(idRevista);
                 if (revista != undefined) {
+                    revista.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(revista);
+                    this._revistaLista.remover(revista);
                     return true;
                 }
                 else {

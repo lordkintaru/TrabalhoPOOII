@@ -3,13 +3,14 @@ abstract class Item {
     protected _titulo: string;
     protected _autor: string;
     protected _ISBN: number;
-    protected _dataDevolucao: Date | null = null;
+    protected _dataDevolucao: Date | null ;
     static _qtdItem: number = 1;
 
     constructor(titulo: string, autor: string, ISBN: number) {
         this._titulo = titulo;
         this._autor = autor;
         this._ISBN = ISBN;
+        this._dataDevolucao = null;
         this._id = Item._qtdItem++;
     }
     
@@ -66,7 +67,7 @@ abstract class Item {
 
     }
     set dataDevolucao(dataDevolucao: Date) {
-        if(dataDevolucao! == this._dataDevolucao){
+        if(dataDevolucao !== this._dataDevolucao){
             this._dataDevolucao = dataDevolucao;
         }else{
             throw new SyntaxError('A data de devolução não pode ser igual a antiga')

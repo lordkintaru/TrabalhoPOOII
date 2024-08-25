@@ -2,7 +2,7 @@ import ILista from "./ILista";
 import Membros from "./Membro";
 
 
-class MembrosLista implements ILista {
+class MembroLista implements ILista {
     private _membros: Array<Membros>;
 
     constructor(membros: Array<Membros> = Array<Membros>()) {
@@ -30,3 +30,5 @@ class MembrosLista implements ILista {
     }
 
 }
+
+export default MembroLista; 

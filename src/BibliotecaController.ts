@@ -4,20 +4,19 @@ import Item from "./Item";
 import Revista from "./Revista";
 import RevistaLista from "./RevistaLista";
 import Membro from "./Membro";
-import Titular from "./Titular";
-import Dependente from "./Dependente";
+import MembroLista from "./MembroLista";
 
 class BibliotecaController {
     private _livroLista: LivroLista;
     private _revistaLista: RevistaLista;
-    private _membros: Array<Membro>;
+    private _membrosLista: MembroLista;
 
     constructor(livroCatalogo: LivroLista = new LivroLista(),
         revistaCatalogo: RevistaLista = new RevistaLista(),
-        membros: Array<Membro> = Array<Membro>()) {
+        membros: MembroLista = new MembroLista()) {
         this._livroLista = livroCatalogo;
         this._revistaLista = revistaCatalogo;
-        this._membros = membros;
+        this._membrosLista = membros;
     }
 
     get livroCatalogo(): LivroLista {
@@ -26,8 +25,8 @@ class BibliotecaController {
     get revistaCatalogo(): RevistaLista {
         return this._revistaLista;
     }
-    get membros(): Array<Membro> {
-        return this._membros;
+    get membrosLista(): MembroLista {
+        return this._membrosLista;
     }
 
     cadastrarLivro(livro: Livro): void {
@@ -38,44 +37,44 @@ class BibliotecaController {
         this._revistaLista.adicionar(revista);
     }
     cadastrarMembro(membro: Membro) : void {
-        this._membros.push(membro);
+        this._membrosLista.adicionar(membro);
     }
 
-    removerMembro(membros: Membro): void {
-        this._membros = this._membros.filter((m) => m.id != membros.id);
+    removerMembro(membro: Membro): void {
+        this._membrosLista.remover(membro);
     }
 
-    realizarEmprestimoLivro(idLivro: number, idMembro: number): boolean;
-    realizarEmprestimoLivro(idMembro: number, idLivro: number): boolean {
-        const membro = this._membros.find((membro) => membro.id === idMembro);
+    realizarEmprestimoLivro(idLivro: number, idMembro: number, dataDevolucao: Date): boolean;
+    realizarEmprestimoLivro(idMembro: number, idLivro: number, dataDevolucao: Date): boolean {
+        const membro = this._membrosLista.buscarPorId(idMembro);
 
         if (membro != undefined) {
-
             if (membro.status == "ativo") {
                 const livro = this._livroLista.buscarPorId(idLivro);
 
                 if (livro != undefined) {
+                    livro.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(livro);
+                    this._livroLista.remover(livro);
+
 
                     return true;
                 } else {
 
                     return false;
                 }
-
             } else {
                 return false;
             }
-
         } else {
             return false
         }
 
     }
 
-    realizarEmprestimoRevista(idLivro: number, idRevista: number): boolean;
-    realizarEmprestimoRevista(idMembro: number, idRevista: number): boolean {
-        const membro = this._membros.find((membro) => membro.id === idMembro);
+    realizarEmprestimoRevista(idLivro: number, idRevista: number, dataDevolucao: Date): boolean;
+    realizarEmprestimoRevista(idMembro: number, idRevista: number, dataDevolucao: Date): boolean {
+        const membro = this._membrosLista.buscarPorId(idMembro);
 
         if (membro != undefined) {
 
@@ -83,7 +82,9 @@ class BibliotecaController {
                 const revista = this._revistaLista.buscarPorId(idRevista);
 
                 if (revista != undefined) {
+                    revista.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(revista);
+                    this._revistaLista.remover(revista);
 
                     return true;
                 } else {

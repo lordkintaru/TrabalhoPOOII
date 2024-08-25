@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class Item {
     constructor(titulo, autor, ISBN) {
-        this._dataDevolucao = null;
         this._titulo = titulo;
         this._autor = autor;
         this._ISBN = ISBN;
+        this._dataDevolucao = null;
         this._id = Item._qtdItem++;
     }
     get id() {
@@ -56,7 +56,7 @@ class Item {
         }
     }
     set dataDevolucao(dataDevolucao) {
-        if (dataDevolucao == this._dataDevolucao) {
+        if (dataDevolucao !== this._dataDevolucao) {
             this._dataDevolucao = dataDevolucao;
         }
         else {

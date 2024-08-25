@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class MembrosLista {
+class MembroLista {
     constructor(membros = Array()) {
         this._membros = membros;
     }
@@ -20,4 +20,5 @@ class MembrosLista {
         return this._membros.toString();
     }
 }
+exports.default = MembroLista;
 //# sourceMappingURL=MembroLista.js.map
