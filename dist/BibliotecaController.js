@@ -79,6 +79,17 @@ class BibliotecaController {
             return false;
         }
     }
+    consultarAtraso() {
+        this._membrosLista.membros.forEach(membros => {
+            membros.emprestimos.forEach(emprestimo => {
+                if (emprestimo.verificarAtraso()) {
+                    console.log(`O membro ${membros.nome} esta atrasado em o item ${emprestimo.toString()}`);
+                }
+                ;
+            });
+        });
+    }
+    ;
 }
 exports.default = BibliotecaController;
 //# sourceMappingURL=BibliotecaController.js.map
