@@ -5,6 +5,8 @@ import Revista from "./Revista";
 import RevistaLista from "./RevistaLista";
 import Membro from "./Membro";
 import MembroLista from "./MembroLista";
+import Dependente from "./Dependente";
+import Titular from "./Titular";
 
 class BibliotecaController {
     private _livroLista: LivroLista;
@@ -29,38 +31,37 @@ class BibliotecaController {
         return this._membrosLista;
     }
 
-    cadastrarLivro(livro: Livro): void {
+    public adicionarLivro(livro: Livro): void {
         this._livroLista.adicionar(livro);
     }
-
-    cadastrarRevista(revista: Revista): void {
+    public adicionarRevista(revista: Revista): void {
         this._revistaLista.adicionar(revista);
     }
-    cadastrarMembro(membro: Membro) : void {
+    public adicionarMembro(membro: Membro) : void {
         this._membrosLista.adicionar(membro);
     }
-
-    removerMembro(membro: Membro): void {
+    public removerMembro(membro: Membro): void {
         this._membrosLista.remover(membro);
     }
+    public removerLivro(livro: Livro): void {
+        this._livroLista.remover(livro);
+    }
+    public removerRevista(revista: Revista): void {
+        this._revistaLista.remover(revista);
+    }
 
-    realizarEmprestimoLivro(idLivro: number, idMembro: number, dataDevolucao: Date): boolean;
-    realizarEmprestimoLivro(idMembro: number, idLivro: number, dataDevolucao: Date): boolean {
+    public realizarEmprestimoLivro(idLivro: number, idMembro: number, dataDevolucao: Date): boolean;
+    public realizarEmprestimoLivro(idMembro: number, idLivro: number, dataDevolucao: Date): boolean {
         const membro = this._membrosLista.buscarPorId(idMembro);
-
         if (membro != undefined) {
             if (membro.status == "ativo") {
                 const livro = this._livroLista.buscarPorId(idLivro);
-
                 if (livro != undefined) {
                     livro.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(livro);
-                    this._livroLista.remover(livro);
-
-
+                    this.removerLivro(livro);
                     return true;
                 } else {
-
                     return false;
                 }
             } else {
@@ -72,8 +73,8 @@ class BibliotecaController {
 
     }
 
-    realizarEmprestimoRevista(idLivro: number, idRevista: number, dataDevolucao: Date): boolean;
-    realizarEmprestimoRevista(idMembro: number, idRevista: number, dataDevolucao: Date): boolean {
+    public realizarEmprestimoRevista(idLivro: number, idRevista: number, dataDevolucao: Date): boolean;
+    public realizarEmprestimoRevista(idMembro: number, idRevista: number, dataDevolucao: Date): boolean {
         const membro = this._membrosLista.buscarPorId(idMembro);
 
         if (membro != undefined) {
@@ -84,7 +85,7 @@ class BibliotecaController {
                 if (revista != undefined) {
                     revista.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(revista);
-                    this._revistaLista.remover(revista);
+                    this.removerRevista(revista);
 
                     return true;
                 } else {
@@ -102,15 +103,15 @@ class BibliotecaController {
     }
 
 
-    devolverLivro(idLivro: number, idMembro: number): boolean;
-    devolverLivro(idMembro: number, idLivro: number): boolean {
+    public devolverLivro(idLivro: number, idMembro: number): boolean;
+    public devolverLivro(idMembro: number, idLivro: number): boolean {
         const membro = this._membrosLista.buscarPorId(idMembro);
         if (membro != undefined) {
             const item = this._livroLista.buscarPorId(idLivro);
             if (item != undefined) {
                 item.dataDevolucao = null;
                 membro.removerEmprestimo(item);
-                this._livroLista.adicionar(item);
+                this.adicionarLivro(item);
                 return true;
             } else {
                 return false;
@@ -121,15 +122,15 @@ class BibliotecaController {
     }
 
 
-    devolverRevista(idRevista: number, idMembros: number): boolean;
-    devolverRevista(idMembros: number, idRevista: number): boolean {
+    public devolverRevista(idRevista: number, idMembros: number): boolean;
+    public devolverRevista(idMembros: number, idRevista: number): boolean {
         const membro = this._membrosLista.buscarPorId(idMembros);
         if (membro != undefined) {
             const item = this._revistaLista.buscarPorId(idRevista);
             if (item != undefined) {
                 item.dataDevolucao = null;
                 membro.removerEmprestimo(item);
-                this._revistaLista.adicionar(item);
+                this.adicionarRevista(item);
                 return true;
             } else {
                 return false;
@@ -138,14 +139,27 @@ class BibliotecaController {
             return false
         }
     }
-    consultarAtraso(): void {
+    public associarDependente(idDependente: number, idTitular: number): boolean;
+    public associarDependente(idTitular: number, idDependente: number): boolean {
+        const dependente = this._membrosLista.buscarPorId(idDependente);
+        const titular = this._membrosLista.buscarPorId(idTitular);
+        if (dependente != undefined && titular != undefined && titular instanceof Titular) {
+            titular.adicionarDependente(dependente);
+            return true;
+        } else {
+            return false
+        }
+        
+    }
+    public consultarMembrosAtrasos(): void {
         this._membrosLista.membros.forEach(membros => {
             membros.emprestimos.forEach(emprestimo => {
                 if (emprestimo.verificarAtraso()) {
                     console.log(`O membro ${membros.nome} esta atrasado em o item ${emprestimo.toString()}`)};
                 })
             })
-        };
+    };
+    
 }
 
 

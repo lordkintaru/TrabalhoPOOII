@@ -4,9 +4,9 @@ import BibliotecaController from "./BibliotecaController";
 
 const biblioteca = new BibliotecaController();
 
-biblioteca.cadastrarMembro(new Titular("Miguel", "ativo"));
-biblioteca.cadastrarMembro(new Titular("dssa", "ativo"));
-biblioteca.cadastrarLivro(new Livro("Livro 1", "Adsada",3214123,"dasdas"));
+biblioteca.adicionarMembro(new Titular("Miguel", "ativo"));
+biblioteca.adicionarMembro(new Titular("dssa", "ativo"));
+biblioteca.adicionarLivro(new Livro("Livro 1", "Adsada",3214123,"dasdas"));
 
 console.log(biblioteca.livroCatalogo);
 

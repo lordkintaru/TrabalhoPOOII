@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const LivroLista_1 = __importDefault(require("./LivroLista"));
 const RevistaLista_1 = __importDefault(require("./RevistaLista"));
 const MembroLista_1 = __importDefault(require("./MembroLista"));
+const Titular_1 = __importDefault(require("./Titular"));
 class BibliotecaController {
     constructor(livroCatalogo = new LivroLista_1.default(), revistaCatalogo = new RevistaLista_1.default(), membros = new MembroLista_1.default()) {
         this._livroLista = livroCatalogo;
@@ -21,17 +22,23 @@ class BibliotecaController {
     get membrosLista() {
         return this._membrosLista;
     }
-    cadastrarLivro(livro) {
+    adicionarLivro(livro) {
         this._livroLista.adicionar(livro);
     }
-    cadastrarRevista(revista) {
+    adicionarRevista(revista) {
         this._revistaLista.adicionar(revista);
     }
-    cadastrarMembro(membro) {
+    adicionarMembro(membro) {
         this._membrosLista.adicionar(membro);
     }
     removerMembro(membro) {
         this._membrosLista.remover(membro);
+    }
+    removerLivro(livro) {
+        this._livroLista.remover(livro);
+    }
+    removerRevista(revista) {
+        this._revistaLista.remover(revista);
     }
     realizarEmprestimoLivro(idMembro, idLivro, dataDevolucao) {
         const membro = this._membrosLista.buscarPorId(idMembro);
@@ -41,7 +48,7 @@ class BibliotecaController {
                 if (livro != undefined) {
                     livro.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(livro);
-                    this._livroLista.remover(livro);
+                    this.removerLivro(livro);
                     return true;
                 }
                 else {
@@ -64,7 +71,7 @@ class BibliotecaController {
                 if (revista != undefined) {
                     revista.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(revista);
-                    this._revistaLista.remover(revista);
+                    this.removerRevista(revista);
                     return true;
                 }
                 else {
@@ -86,7 +93,7 @@ class BibliotecaController {
             if (item != undefined) {
                 item.dataDevolucao = null;
                 membro.removerEmprestimo(item);
-                this._livroLista.adicionar(item);
+                this.adicionarLivro(item);
                 return true;
             }
             else {
@@ -104,7 +111,7 @@ class BibliotecaController {
             if (item != undefined) {
                 item.dataDevolucao = null;
                 membro.removerEmprestimo(item);
-                this._revistaLista.adicionar(item);
+                this.adicionarRevista(item);
                 return true;
             }
             else {
@@ -115,7 +122,18 @@ class BibliotecaController {
             return false;
         }
     }
-    consultarAtraso() {
+    associarDependente(idTitular, idDependente) {
+        const dependente = this._membrosLista.buscarPorId(idDependente);
+        const titular = this._membrosLista.buscarPorId(idTitular);
+        if (dependente != undefined && titular != undefined && titular instanceof Titular_1.default) {
+            titular.adicionarDependente(dependente);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    consultarMembrosAtrasos() {
         this._membrosLista.membros.forEach(membros => {
             membros.emprestimos.forEach(emprestimo => {
                 if (emprestimo.verificarAtraso()) {
