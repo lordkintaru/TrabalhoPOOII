@@ -1,16 +1,17 @@
-import Titular from "./Titular";
+import LivroLista from "./LivroLista";
 import Livro from "./Livro";
-import BibliotecaController from "./BibliotecaController";
 
-const biblioteca = new BibliotecaController();
+const livros = new LivroLista();
 
-biblioteca.adicionarMembro(new Titular("Miguel", "ativo"));
-biblioteca.adicionarMembro(new Titular("dssa", "ativo"));
-biblioteca.adicionarLivro(new Livro("Livro 1", "Adsada",3214123,"dasdas"));
+livros.adicionar(new Livro('Harry Potter', 'J.K. Rowling',4523123, 'fantasia'),
+                new Livro('Senhor dos Aneis', 'J.R.R. Tolkien', 321321, 'fantasia'),
+                new Livro('Java fundamentos', 'Gustavo Guanabara', 1231312, 'educativo'),
+                new Livro('JavaScript fundamentos', 'Gustavo Guanabara', 3213123, 'educativo'),
+                new Livro('React Avancado', 'Gustavo Guanabara', 1231312, 'educativo'),
+                new Livro('Python fundamentos', 'Gustavo Guanabara', 1231312, 'educativo'));
 
-console.log(biblioteca.livroCatalogo);
+console.log(livros);
 
-biblioteca.realizarEmprestimoLivro(1, 1, new Date(2022, 1, 1));
-
-console.log(biblioteca.membrosLista.membros[0].emprestimos[0]);
+livros.remover(3,5);
+console.log(livros);
 

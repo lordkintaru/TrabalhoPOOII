@@ -7,11 +7,13 @@ class MembroLista {
     get membros() {
         return this._membros;
     }
-    adicionar(membro) {
-        this._membros.push(membro);
+    adicionar(...membros) {
+        this._membros = [...this._membros, ...membros];
     }
-    remover(membros) {
-        this._membros.splice(this._membros.indexOf(membros), 1);
+    remover(...idMembro) {
+        idMembro.forEach(m => {
+            this._membros = this._membros.filter(membro => membro.id != m);
+        });
     }
     buscarPorId(id) {
         return this._membros.find(membros => membros.id == id);

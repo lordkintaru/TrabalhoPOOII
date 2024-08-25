@@ -14,12 +14,16 @@ class RevistaLista implements ILista {
         return this._revistas;
     }
 
-    adicionar(revista: Revista): void {
-        this._revistas.push(revista);
+
+    adicionar(...revistas: Array<Revista>): void {
+        this._revistas = [...this._revistas, ...revistas];
+        
     }
 
-    remover(revista : Revista): void {
-        this._revistas.splice(this._revistas.indexOf(revista), 1);
+    remover(...idRevista: Array<number>): void {
+        idRevista.forEach(r => {
+            this._revistas = this._revistas.filter(revista => revista.id != r);
+        })
     }
 
     buscarPorId(id: Number): Revista | undefined {

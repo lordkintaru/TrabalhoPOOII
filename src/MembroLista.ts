@@ -1,27 +1,30 @@
 import ILista from "./ILista";
-import Membros from "./Membro";
+import Membro from "./Membro";
 
 
 class MembroLista implements ILista {
-    private _membros: Array<Membros>;
+    private _membros: Array<Membro>;
 
-    constructor(membros: Array<Membros> = Array<Membros>()) {
+    constructor(membros: Array<Membro> = Array<Membro>()) {
         this._membros = membros;
     }
 
-    get membros() : Array<Membros> {
+    get membros() : Array<Membro> {
         return this._membros;
     }
 
-    adicionar(membro: Membros): void {
-        this._membros.push(membro);
+    adicionar(...membros: Array<Membro>): void {
+        this._membros = [...this._membros, ...membros];
+        
     }
 
-    remover(membros: Membros): void {
-        this._membros.splice(this._membros.indexOf(membros), 1);
+    remover(...idMembro: Array<number>): void {
+        idMembro.forEach(m => {
+            this._membros = this._membros.filter(membro => membro.id != m);
+        })
     }
 
-    buscarPorId(id: Number): Membros | undefined {
+    buscarPorId(id: Number): Membro | undefined {
         return this._membros.find(membros => membros.id == id);
     }
 

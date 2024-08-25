@@ -7,11 +7,13 @@ class LivroLista {
     get livros() {
         return this._livros;
     }
-    adicionar(livro) {
-        this._livros.push(livro);
+    adicionar(...livro) {
+        this._livros = [...this._livros, ...livro];
     }
-    remover(livro) {
-        this._livros.splice(this._livros.indexOf(livro), 1);
+    remover(...idLivro) {
+        idLivro.forEach(l => {
+            this._livros = this._livros.filter(livro => livro.id != l);
+        });
     }
     buscarPorId(id) {
         return this._livros.find(livro => livro.id == id);

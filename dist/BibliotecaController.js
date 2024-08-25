@@ -22,8 +22,8 @@ class BibliotecaController {
     get membrosLista() {
         return this._membrosLista;
     }
-    adicionarLivro(livro) {
-        this._livroLista.adicionar(livro);
+    adicionarLivros(...livro) {
+        this._livroLista.adicionar(...livro);
     }
     adicionarRevista(revista) {
         this._revistaLista.adicionar(revista);
@@ -31,14 +31,14 @@ class BibliotecaController {
     adicionarMembro(membro) {
         this._membrosLista.adicionar(membro);
     }
-    removerMembro(membro) {
-        this._membrosLista.remover(membro);
+    removerMembroPorId(...membro) {
+        this._membrosLista.remover(...membro);
     }
-    removerLivro(livro) {
-        this._livroLista.remover(livro);
+    removerLivroPorId(...idLivro) {
+        this._livroLista.remover(...idLivro);
     }
-    removerRevista(revista) {
-        this._revistaLista.remover(revista);
+    removerRevistasPorId(...idRevista) {
+        this._revistaLista.remover(...idRevista);
     }
     realizarEmprestimoLivro(idMembro, idLivro, dataDevolucao) {
         const membro = this._membrosLista.buscarPorId(idMembro);
@@ -48,7 +48,7 @@ class BibliotecaController {
                 if (livro != undefined) {
                     livro.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(livro);
-                    this.removerLivro(livro);
+                    this.removerLivroPorId(livro.id);
                     return true;
                 }
                 else {
@@ -71,7 +71,7 @@ class BibliotecaController {
                 if (revista != undefined) {
                     revista.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(revista);
-                    this.removerRevista(revista);
+                    this.removerRevistasPorId(revista.id);
                     return true;
                 }
                 else {
@@ -93,7 +93,7 @@ class BibliotecaController {
             if (item != undefined) {
                 item.dataDevolucao = null;
                 membro.removerEmprestimo(item);
-                this.adicionarLivro(item);
+                this.adicionarLivros(item);
                 return true;
             }
             else {

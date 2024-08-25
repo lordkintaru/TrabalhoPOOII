@@ -31,8 +31,8 @@ class BibliotecaController {
         return this._membrosLista;
     }
 
-    public adicionarLivro(livro: Livro): void {
-        this._livroLista.adicionar(livro);
+    public adicionarLivros(...livro: Array<Livro>): void {
+        this._livroLista.adicionar(...livro);
     }
     public adicionarRevista(revista: Revista): void {
         this._revistaLista.adicionar(revista);
@@ -40,14 +40,14 @@ class BibliotecaController {
     public adicionarMembro(membro: Membro) : void {
         this._membrosLista.adicionar(membro);
     }
-    public removerMembro(membro: Membro): void {
-        this._membrosLista.remover(membro);
+    public removerMembroPorId(...membro: Array<number>): void {
+        this._membrosLista.remover(...membro);
     }
-    public removerLivro(livro: Livro): void {
-        this._livroLista.remover(livro);
+    public removerLivroPorId(...idLivro: Array<number>): void {
+        this._livroLista.remover(...idLivro);
     }
-    public removerRevista(revista: Revista): void {
-        this._revistaLista.remover(revista);
+    public removerRevistasPorId(...idRevista: Array<number>): void {
+        this._revistaLista.remover(...idRevista);
     }
 
     public realizarEmprestimoLivro(idLivro: number, idMembro: number, dataDevolucao: Date): boolean;
@@ -59,7 +59,7 @@ class BibliotecaController {
                 if (livro != undefined) {
                     livro.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(livro);
-                    this.removerLivro(livro);
+                    this.removerLivroPorId(livro.id);
                     return true;
                 } else {
                     return false;
@@ -76,27 +76,20 @@ class BibliotecaController {
     public realizarEmprestimoRevista(idLivro: number, idRevista: number, dataDevolucao: Date): boolean;
     public realizarEmprestimoRevista(idMembro: number, idRevista: number, dataDevolucao: Date): boolean {
         const membro = this._membrosLista.buscarPorId(idMembro);
-
         if (membro != undefined) {
-
             if (membro.status == "ativo") {
                 const revista = this._revistaLista.buscarPorId(idRevista);
-
                 if (revista != undefined) {
                     revista.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(revista);
-                    this.removerRevista(revista);
-
+                    this.removerRevistasPorId(revista.id);
                     return true;
                 } else {
-
                     return false;
                 }
-
             } else {
                 return false;
             }
-
         } else {
             return false
         }
@@ -111,7 +104,7 @@ class BibliotecaController {
             if (item != undefined) {
                 item.dataDevolucao = null;
                 membro.removerEmprestimo(item);
-                this.adicionarLivro(item);
+                this.adicionarLivros(item);
                 return true;
             } else {
                 return false;

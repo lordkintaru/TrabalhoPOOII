@@ -12,14 +12,15 @@ class LivroLista implements ILista {
         return this._livros;
     }
 
-    adicionar(livro: Livro): void {
-        this._livros.push(livro);
+    adicionar(...livro: Array<Livro>): void {
+        this._livros = [...this._livros, ...livro];
         
     }
 
-    remover(livro: Livro): void {
-        this._livros.splice(this._livros.indexOf(livro), 1);
-      
+    remover(...idLivro: Array<number>): void {
+        idLivro.forEach(l => {
+            this._livros = this._livros.filter(livro => livro.id != l);
+        })
     }
 
     buscarPorId(id: Number): Livro | undefined {

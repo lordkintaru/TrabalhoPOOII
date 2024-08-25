@@ -7,11 +7,13 @@ class RevistaLista {
     get revistas() {
         return this._revistas;
     }
-    adicionar(revista) {
-        this._revistas.push(revista);
+    adicionar(...revistas) {
+        this._revistas = [...this._revistas, ...revistas];
     }
-    remover(revista) {
-        this._revistas.splice(this._revistas.indexOf(revista), 1);
+    remover(...idRevista) {
+        idRevista.forEach(r => {
+            this._revistas = this._revistas.filter(revista => revista.id != r);
+        });
     }
     buscarPorId(id) {
         return this._revistas.find(revista => revista.id == id);
