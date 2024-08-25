@@ -1,6 +1,5 @@
 import LivroLista from "./LivroLista";
 import Livro from "./Livro";
-import Item from "./Item";
 import Revista from "./Revista";
 import RevistaLista from "./RevistaLista";
 import Membro from "./Membro";
@@ -33,25 +32,30 @@ class BibliotecaController {
 
     public adicionarLivros(...livro: Array<Livro>): void {
         this._livroLista.adicionar(...livro);
+       
     }
     public adicionarRevista(revista: Revista): void {
         this._revistaLista.adicionar(revista);
+       
     }
-    public adicionarMembro(membro: Membro) : void {
+    public adicionarMembro(membro: Membro): void {
         this._membrosLista.adicionar(membro);
+      
     }
     public removerMembroPorId(...membro: Array<number>): void {
         this._membrosLista.remover(...membro);
+        
     }
     public removerLivroPorId(...idLivro: Array<number>): void {
         this._livroLista.remover(...idLivro);
+       
     }
     public removerRevistasPorId(...idRevista: Array<number>): void {
         this._revistaLista.remover(...idRevista);
     }
 
-    public realizarEmprestimoLivro(idLivro: number, idMembro: number, dataDevolucao: Date): boolean;
-    public realizarEmprestimoLivro(idMembro: number, idLivro: number, dataDevolucao: Date): boolean {
+    public realizarEmprestimoLivro(idLivro: number, idMembro: number, dataDevolucao: Date): void;
+    public realizarEmprestimoLivro(idMembro: number, idLivro: number, dataDevolucao: Date): void {
         const membro = this._membrosLista.buscarPorId(idMembro);
         if (membro != undefined) {
             if (membro.status == "ativo") {
@@ -60,21 +64,21 @@ class BibliotecaController {
                     livro.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(livro);
                     this.removerLivroPorId(livro.id);
-                    return true;
+                    console.log(`Livro ${livro.titulo} devolvido com sucesso`)
                 } else {
-                    return false;
+                    console.log(`Livro não encontrado`)
                 }
             } else {
-                return false;
+                console.log(`Membro não é ativo`)
             }
         } else {
-            return false
+            console.log(`Membro não encontrado`)
         }
 
     }
 
-    public realizarEmprestimoRevista(idLivro: number, idRevista: number, dataDevolucao: Date): boolean;
-    public realizarEmprestimoRevista(idMembro: number, idRevista: number, dataDevolucao: Date): boolean {
+    public realizarEmprestimoRevista(idLivro: number, idRevista: number, dataDevolucao: Date): void;
+    public realizarEmprestimoRevista(idMembro: number, idRevista: number, dataDevolucao: Date): void {
         const membro = this._membrosLista.buscarPorId(idMembro);
         if (membro != undefined) {
             if (membro.status == "ativo") {
@@ -83,21 +87,21 @@ class BibliotecaController {
                     revista.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(revista);
                     this.removerRevistasPorId(revista.id);
-                    return true;
+                    console.log(`Revista ${revista.titulo} devolvida com sucesso`)
                 } else {
-                    return false;
+                    console.log(`Revista não encontrada`)
                 }
             } else {
-                return false;
+                console.log(`Membro não é ativo`)
             }
         } else {
-            return false
+            console.log(`Membro não encontrado`)
         }
     }
 
 
-    public devolverLivro(idLivro: number, idMembro: number): boolean;
-    public devolverLivro(idMembro: number, idLivro: number): boolean {
+    public devolverLivro(idLivro: number, idMembro: number): void;
+    public devolverLivro(idMembro: number, idLivro: number): void {
         const membro = this._membrosLista.buscarPorId(idMembro);
         if (membro != undefined) {
             const item = this._livroLista.buscarPorId(idLivro);
@@ -105,18 +109,18 @@ class BibliotecaController {
                 item.dataDevolucao = null;
                 membro.removerEmprestimo(item);
                 this.adicionarLivros(item);
-                return true;
+                console.log(`Livro ${item.titulo} devolvido com sucesso`)
             } else {
-                return false;
+                console.log(`Livro não encontrado`)
             }
         } else {
-            return false
+            console.log(`Membro não encontrado`)
         }
     }
 
 
-    public devolverRevista(idRevista: number, idMembros: number): boolean;
-    public devolverRevista(idMembros: number, idRevista: number): boolean {
+    public devolverRevista(idRevista: number, idMembros: number): void;
+    public devolverRevista(idMembros: number, idRevista: number): void {
         const membro = this._membrosLista.buscarPorId(idMembros);
         if (membro != undefined) {
             const item = this._revistaLista.buscarPorId(idRevista);
@@ -124,35 +128,36 @@ class BibliotecaController {
                 item.dataDevolucao = null;
                 membro.removerEmprestimo(item);
                 this.adicionarRevista(item);
-                return true;
+                console.log(`Revista ${item.titulo} devolvida com sucesso`)
             } else {
-                return false;
+                console.log(`Revista não encontrada`)
             }
         } else {
-            return false
+            console.log(`Membro não encontrado`)
         }
     }
-    public associarDependente(idDependente: number, idTitular: number): boolean;
-    public associarDependente(idTitular: number, idDependente: number): boolean {
+    public associarDependente(idDependente: number, idTitular: number): void;
+    public associarDependente(idTitular: number, idDependente: number): void {
         const dependente = this._membrosLista.buscarPorId(idDependente);
         const titular = this._membrosLista.buscarPorId(idTitular);
         if (dependente != undefined && titular != undefined && titular instanceof Titular) {
             titular.adicionarDependente(dependente);
-            return true;
+            console.log(`Dependente ${dependente.nome} associado ao Titular ${titular.nome}`)
         } else {
-            return false
+            console.log(`Dependente ou Titular não encontrado`)
         }
-        
+
     }
     public consultarMembrosAtrasos(): void {
         this._membrosLista.membros.forEach(membros => {
             membros.emprestimos.forEach(emprestimo => {
                 if (emprestimo.verificarAtraso()) {
-                    console.log(`O membro ${membros.nome} esta atrasado em o item ${emprestimo.toString()}`)};
-                })
+                    console.log(`O membro ID ${membros.id} ${membros.nome} esta atrasado em o item ${emprestimo.toString()}`)
+                };
             })
+        })
     };
-    
+
 }
 
 

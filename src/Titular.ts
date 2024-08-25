@@ -16,12 +16,9 @@ class Titular extends Membro{
     } 
 
 
-    adicionarDependente(dependente: Dependente | Array<Dependente>) : void{
-        if(Array.isArray(dependente)){
-            this._dependentes = [...this._dependentes,...dependente];
-        }else{
-            this._dependentes = [...this._dependentes,dependente]
-        }
+    adicionarDependente(dependente: Dependente ) : void{
+         this._dependentes = [...this._dependentes,dependente]
+        
 
     }
     removerDependente(dependente: Dependente): void {

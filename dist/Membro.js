@@ -39,13 +39,8 @@ class Membro {
             throw new SyntaxError('O status não pode ser igual ao antigo');
         }
     }
-    adicionarEmprestimo(emprestimo) {
-        if (Array.isArray(emprestimo)) {
-            this._emprestimos = [...this._emprestimos, ...emprestimo];
-        }
-        else {
-            this._emprestimos = [...this._emprestimos, emprestimo];
-        }
+    adicionarEmprestimo(...emprestimo) {
+        this._emprestimos = [...this._emprestimos, ...emprestimo];
     }
     removerEmprestimo(emprestimo) {
         this._emprestimos = this._emprestimos.filter((e) => e.id != emprestimo.id);

@@ -46,12 +46,9 @@ abstract class Membro {
 
     }
 
-    adicionarEmprestimo(emprestimo: Item | Array<Item>): void {
-        if (Array.isArray(emprestimo)) {
-            this._emprestimos = [...this._emprestimos, ...emprestimo];
-        } else {
-            this._emprestimos = [...this._emprestimos, emprestimo];
-        }
+    adicionarEmprestimo(...emprestimo:Array<Item>): void {
+       this._emprestimos = [...this._emprestimos, ...emprestimo];
+     
     }
     removerEmprestimo(emprestimo: Item): void {
         this._emprestimos = this._emprestimos.filter((e) => e.id != emprestimo.id);

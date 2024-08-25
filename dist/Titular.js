@@ -13,12 +13,7 @@ class Titular extends Membro_1.default {
         return this._dependentes;
     }
     adicionarDependente(dependente) {
-        if (Array.isArray(dependente)) {
-            this._dependentes = [...this._dependentes, ...dependente];
-        }
-        else {
-            this._dependentes = [...this._dependentes, dependente];
-        }
+        this._dependentes = [...this._dependentes, dependente];
     }
     removerDependente(dependente) {
         this._dependentes = this._dependentes.filter((d) => d.id != dependente.id);

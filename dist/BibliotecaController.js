@@ -49,18 +49,18 @@ class BibliotecaController {
                     livro.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(livro);
                     this.removerLivroPorId(livro.id);
-                    return true;
+                    console.log(`Livro ${livro.titulo} devolvido com sucesso`);
                 }
                 else {
-                    return false;
+                    console.log(`Livro não encontrado`);
                 }
             }
             else {
-                return false;
+                console.log(`Membro não é ativo`);
             }
         }
         else {
-            return false;
+            console.log(`Membro não encontrado`);
         }
     }
     realizarEmprestimoRevista(idMembro, idRevista, dataDevolucao) {
@@ -72,18 +72,18 @@ class BibliotecaController {
                     revista.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(revista);
                     this.removerRevistasPorId(revista.id);
-                    return true;
+                    console.log(`Revista ${revista.titulo} devolvida com sucesso`);
                 }
                 else {
-                    return false;
+                    console.log(`Revista não encontrada`);
                 }
             }
             else {
-                return false;
+                console.log(`Membro não é ativo`);
             }
         }
         else {
-            return false;
+            console.log(`Membro não encontrado`);
         }
     }
     devolverLivro(idMembro, idLivro) {
@@ -94,14 +94,14 @@ class BibliotecaController {
                 item.dataDevolucao = null;
                 membro.removerEmprestimo(item);
                 this.adicionarLivros(item);
-                return true;
+                console.log(`Livro ${item.titulo} devolvido com sucesso`);
             }
             else {
-                return false;
+                console.log(`Livro não encontrado`);
             }
         }
         else {
-            return false;
+            console.log(`Membro não encontrado`);
         }
     }
     devolverRevista(idMembros, idRevista) {
@@ -112,14 +112,14 @@ class BibliotecaController {
                 item.dataDevolucao = null;
                 membro.removerEmprestimo(item);
                 this.adicionarRevista(item);
-                return true;
+                console.log(`Revista ${item.titulo} devolvida com sucesso`);
             }
             else {
-                return false;
+                console.log(`Revista não encontrada`);
             }
         }
         else {
-            return false;
+            console.log(`Membro não encontrado`);
         }
     }
     associarDependente(idTitular, idDependente) {
@@ -127,17 +127,17 @@ class BibliotecaController {
         const titular = this._membrosLista.buscarPorId(idTitular);
         if (dependente != undefined && titular != undefined && titular instanceof Titular_1.default) {
             titular.adicionarDependente(dependente);
-            return true;
+            console.log(`Dependente ${dependente.nome} associado ao Titular ${titular.nome}`);
         }
         else {
-            return false;
+            console.log(`Dependente ou Titular não encontrado`);
         }
     }
     consultarMembrosAtrasos() {
         this._membrosLista.membros.forEach(membros => {
             membros.emprestimos.forEach(emprestimo => {
                 if (emprestimo.verificarAtraso()) {
-                    console.log(`O membro ${membros.nome} esta atrasado em o item ${emprestimo.toString()}`);
+                    console.log(`O membro ID ${membros.id} ${membros.nome} esta atrasado em o item ${emprestimo.toString()}`);
                 }
                 ;
             });
