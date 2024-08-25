@@ -66,7 +66,7 @@ abstract class Item {
         }
 
     }
-    set dataDevolucao(dataDevolucao: Date) {
+    set dataDevolucao(dataDevolucao: Date | null) {
         if(dataDevolucao !== this._dataDevolucao){
             this._dataDevolucao = dataDevolucao;
         }else{

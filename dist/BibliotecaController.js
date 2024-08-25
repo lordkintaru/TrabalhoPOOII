@@ -79,6 +79,42 @@ class BibliotecaController {
             return false;
         }
     }
+    devolverLivro(idMembro, idLivro) {
+        const membro = this._membrosLista.buscarPorId(idMembro);
+        if (membro != undefined) {
+            const item = this._livroLista.buscarPorId(idLivro);
+            if (item != undefined) {
+                item.dataDevolucao = null;
+                membro.removerEmprestimo(item);
+                this._livroLista.adicionar(item);
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+    devolverRevista(idMembros, idRevista) {
+        const membro = this._membrosLista.buscarPorId(idMembros);
+        if (membro != undefined) {
+            const item = this._revistaLista.buscarPorId(idRevista);
+            if (item != undefined) {
+                item.dataDevolucao = null;
+                membro.removerEmprestimo(item);
+                this._revistaLista.adicionar(item);
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
     consultarAtraso() {
         this._membrosLista.membros.forEach(membros => {
             membros.emprestimos.forEach(emprestimo => {

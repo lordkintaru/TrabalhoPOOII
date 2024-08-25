@@ -101,6 +101,43 @@ class BibliotecaController {
         }
     }
 
+
+    devolverLivro(idLivro: number, idMembro: number): boolean;
+    devolverLivro(idMembro: number, idLivro: number): boolean {
+        const membro = this._membrosLista.buscarPorId(idMembro);
+        if (membro != undefined) {
+            const item = this._livroLista.buscarPorId(idLivro);
+            if (item != undefined) {
+                item.dataDevolucao = null;
+                membro.removerEmprestimo(item);
+                this._livroLista.adicionar(item);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false
+        }
+    }
+
+
+    devolverRevista(idRevista: number, idMembros: number): boolean;
+    devolverRevista(idMembros: number, idRevista: number): boolean {
+        const membro = this._membrosLista.buscarPorId(idMembros);
+        if (membro != undefined) {
+            const item = this._revistaLista.buscarPorId(idRevista);
+            if (item != undefined) {
+                item.dataDevolucao = null;
+                membro.removerEmprestimo(item);
+                this._revistaLista.adicionar(item);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false
+        }
+    }
     consultarAtraso(): void {
         this._membrosLista.membros.forEach(membros => {
             membros.emprestimos.forEach(emprestimo => {
