@@ -54,7 +54,7 @@ class BibliotecaController {
         this._revistaLista.remover(...idRevista);
     }
 
-    public realizarEmprestimoLivro(idLivro: number, idMembro: number, dataDevolucao: Date): void;
+
     public realizarEmprestimoLivro(idMembro: number, idLivro: number, dataDevolucao: Date): void {
         const membro = this._membrosLista.buscarPorId(idMembro);
         if (membro != undefined) {
@@ -64,7 +64,7 @@ class BibliotecaController {
                     livro.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(livro);
                     this.removerLivroPorId(livro.id);
-                    console.log(`Livro ${livro.titulo} devolvido com sucesso`)
+                    console.log(`Livro ${livro.titulo} emprestado com sucesso`)
                 } else {
                     console.log(`Livro não encontrado`)
                 }
@@ -77,7 +77,7 @@ class BibliotecaController {
 
     }
 
-    public realizarEmprestimoRevista(idLivro: number, idRevista: number, dataDevolucao: Date): void;
+
     public realizarEmprestimoRevista(idMembro: number, idRevista: number, dataDevolucao: Date): void {
         const membro = this._membrosLista.buscarPorId(idMembro);
         if (membro != undefined) {
@@ -87,7 +87,7 @@ class BibliotecaController {
                     revista.dataDevolucao = dataDevolucao;
                     membro.adicionarEmprestimo(revista);
                     this.removerRevistasPorId(revista.id);
-                    console.log(`Revista ${revista.titulo} devolvida com sucesso`)
+                    console.log(`Revista ${revista.titulo} emprestado com sucesso`)
                 } else {
                     console.log(`Revista não encontrada`)
                 }
@@ -100,47 +100,55 @@ class BibliotecaController {
     }
 
 
-    public devolverLivro(idLivro: number, idMembro: number): void;
     public devolverLivro(idMembro: number, idLivro: number): void {
         const membro = this._membrosLista.buscarPorId(idMembro);
-        if (membro != undefined) {
-            const item = this._livroLista.buscarPorId(idLivro);
-            if (item != undefined) {
-                item.dataDevolucao = null;
-                membro.removerEmprestimo(item);
-                this.adicionarLivros(item);
-                console.log(`Livro ${item.titulo} devolvido com sucesso`)
+        if(membro?.status == "ativo"){
+            if (membro != undefined) {
+                const item = membro.buscarEmprestimoPorId(idLivro);
+                if (item != undefined && item instanceof Livro) {
+                    item.dataDevolucao = null;
+                    membro.removerEmprestimo(item);
+                    this.adicionarLivros(item);
+                    console.log(`Livro ${item.titulo} devolvido com sucesso`)
+                } else {
+                    console.log(`Livro não encontrado`)
+                }
             } else {
-                console.log(`Livro não encontrado`)
+                console.log(`Membro não encontrado`)
             }
-        } else {
-            console.log(`Membro não encontrado`)
+        }else{
+            console.log(`Membros não e ativo, por isso não pode locar livros, logo não possui tal item`)
         }
+      
     }
 
 
-    public devolverRevista(idRevista: number, idMembros: number): void;
+
     public devolverRevista(idMembros: number, idRevista: number): void {
         const membro = this._membrosLista.buscarPorId(idMembros);
-        if (membro != undefined) {
-            const item = this._revistaLista.buscarPorId(idRevista);
-            if (item != undefined) {
-                item.dataDevolucao = null;
-                membro.removerEmprestimo(item);
-                this.adicionarRevista(item);
-                console.log(`Revista ${item.titulo} devolvida com sucesso`)
+        if(membro?.status == "ativo"){
+            if (membro != undefined) {
+                const item = membro.buscarEmprestimoPorId(idRevista);
+                if (item != undefined && item instanceof Revista) {
+                    item.dataDevolucao = null;
+                    membro.removerEmprestimo(item);
+                    this.adicionarRevista(item);
+                    console.log(`Revista ${item.titulo} devolvida com sucesso`)
+                } else {
+                    console.log(`Revista não encontrada`)
+                }
             } else {
-                console.log(`Revista não encontrada`)
+                console.log(`Membro não encontrado`)
             }
-        } else {
-            console.log(`Membro não encontrado`)
+        }else{
+            console.log(`Membro não e ativo, por isso não pode locar revistas, logo não possui tal item`)
         }
+     
     }
-    public associarDependente(idDependente: number, idTitular: number): void;
-    public associarDependente(idTitular: number, idDependente: number): void {
+    public associarDependenteAoTitular(idDependente: number, idTitular: number): void{
         const dependente = this._membrosLista.buscarPorId(idDependente);
         const titular = this._membrosLista.buscarPorId(idTitular);
-        if (dependente != undefined && titular != undefined && titular instanceof Titular) {
+        if (dependente != undefined && titular != undefined && titular instanceof Titular && dependente instanceof Dependente) {
             titular.adicionarDependente(dependente);
             console.log(`Dependente ${dependente.nome} associado ao Titular ${titular.nome}`)
         } else {

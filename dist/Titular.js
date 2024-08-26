@@ -12,8 +12,8 @@ class Titular extends Membro_1.default {
     get dependetes() {
         return this._dependentes;
     }
-    adicionarDependente(dependente) {
-        this._dependentes = [...this._dependentes, dependente];
+    adicionarDependente(...dependente) {
+        this._dependentes = [...this._dependentes, ...dependente];
     }
     removerDependente(dependente) {
         this._dependentes = this._dependentes.filter((d) => d.id != dependente.id);

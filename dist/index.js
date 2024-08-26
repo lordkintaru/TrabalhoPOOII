@@ -17,6 +17,42 @@ try {
     const revistas = new RevistaLista_1.default([new Revista_1.default('Coleção Natura', 'Natura', 523134, new Date('2021-05-07')), new Revista_1.default('Ciência todo dia', 'Globo', 123123, new Date('2024-01-01')), new Revista_1.default('Fashion todo dia', 'Zara', 572381, new Date('2020-07-02')), new Revista_1.default('Cozinha todo dia', 'Jacquin', 590234, new Date('2014-02-11')), new Revista_1.default('Notas Musicais', 'The Drummer', 734123, new Date('2008-12-01')), new Revista_1.default('Os muquiranas', 'Painel', 756943, new Date('2019-11-01'))]);
     const membros = new MembroLista_1.default([new Titular_1.default('Joaquim', 'ativo'), new Titular_1.default('João', 'inativo'), new Dependente_1.default('Maria', 'inativo'), new Dependente_1.default('Jose', 'ativo'), new Dependente_1.default('Pedro', 'ativo'), new Titular_1.default('Carlos', 'ativo'), new Titular_1.default('Lucas', 'ativo'), new Titular_1.default('Ana', 'inativo'), new Titular_1.default('Paula', 'ativo'), new Dependente_1.default('Lucia', 'inativo')]);
     const biblioteca = new BibliotecaController_1.default(livros, revistas, membros);
+    //Fazendo associação dos Dependentes com o Titular;
+    console.log("--Fazendo associação dos Dependentes com o Titular");
+    biblioteca.associarDependenteAoTitular(1, 1); //Tentando realizar uma associação errada.
+    biblioteca.associarDependenteAoTitular(3, 1); //Associando o dependente 3 ao Titular 1.
+    biblioteca.associarDependenteAoTitular(4, 1); //Associando o dependente 4 ao Titular 1.
+    biblioteca.associarDependenteAoTitular(5, 6); //Associando o dependente 5 ao Titular 6.
+    biblioteca.associarDependenteAoTitular(10, 7); //Associando o dependente 10 ao Titular 7.
+    console.log("\n");
+    //Fazendo locação de livros;
+    console.log("--Fazendo locação de livros");
+    biblioteca.realizarEmprestimoLivro(1, 1, new Date('2021-05-07'));
+    biblioteca.realizarEmprestimoLivro(2, 5, new Date('2021-05-07')); //Fazendo locação de livros com o membro inativo;
+    biblioteca.realizarEmprestimoLivro(4, 5, new Date('2024-09-09'));
+    console.log("\n");
+    //Fazendo locação de revistas;
+    console.log("--Fazendo locação de revistas");
+    biblioteca.realizarEmprestimoRevista(7, 9, new Date('2021-05-07'));
+    biblioteca.realizarEmprestimoRevista(3, 5, new Date('2021-05-07')); //Fazendo locação de revistas com o membro inativo;
+    biblioteca.realizarEmprestimoRevista(5, 11, new Date('2024-09-09'));
+    console.log("\n");
+    //Verificando atrasos;
+    console.log("--Verificando atrasos");
+    biblioteca.consultarMembrosAtrasos();
+    console.log("\n");
+    //Fazendo devolucões de livros;
+    console.log("--Fazendo devolucões de livros");
+    biblioteca.devolverLivro(1, 1);
+    biblioteca.devolverLivro(2, 5); //Fazendo devolucão de livros com o membro inativo;
+    biblioteca.devolverLivro(4, 5);
+    console.log("\n");
+    //Fazendo devolucões de revistas;
+    console.log("--Fazendo devolucões de revistas");
+    biblioteca.devolverRevista(7, 9);
+    biblioteca.devolverRevista(3, 5); //Fazendo devolucão de revistas com o membro inativo;
+    biblioteca.devolverRevista(5, 11);
+    console.log("\n");
 }
 catch (e) {
     console.log(e);

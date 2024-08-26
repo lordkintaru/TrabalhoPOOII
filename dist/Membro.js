@@ -45,6 +45,9 @@ class Membro {
     removerEmprestimo(emprestimo) {
         this._emprestimos = this._emprestimos.filter((e) => e.id != emprestimo.id);
     }
+    buscarEmprestimoPorId(id) {
+        return this._emprestimos.find((e) => e.id == id);
+    }
     toString() {
         return `ID: ${this._id}, Nome: ${this._nome}, Status: ${this._status}`;
     }

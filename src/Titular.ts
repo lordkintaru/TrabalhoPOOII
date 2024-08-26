@@ -16,8 +16,8 @@ class Titular extends Membro{
     } 
 
 
-    adicionarDependente(dependente: Dependente ) : void{
-         this._dependentes = [...this._dependentes,dependente]
+    adicionarDependente(...dependente: Array<Dependente> ) : void{
+         this._dependentes = [...this._dependentes,...dependente]
         
 
     }
