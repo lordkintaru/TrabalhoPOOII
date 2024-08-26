@@ -42,8 +42,18 @@ class BibliotecaController {
         this._membrosLista.adicionar(membro);
       
     }
-    public removerMembroPorId(...membro: Array<number>): void {
-        this._membrosLista.remover(...membro);
+    public removerMembroPorId(...idMembro: Array<number>): void {
+        idMembro.forEach(m => {
+            const membro = this._membrosLista.buscarPorId(m);
+            if(membro instanceof Dependente){
+                this._membrosLista.membros.forEach(ml =>{
+                    if(ml instanceof Titular){
+                        ml.removerDependente(membro)
+                    }
+                })
+            }
+            this._membrosLista.remover(...idMembro);
+        })
         
     }
     public removerLivroPorId(...idLivro: Array<number>): void {

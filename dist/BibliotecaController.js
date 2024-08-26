@@ -36,6 +36,10 @@ class BibliotecaController {
     }
     removerMembroPorId(...membro) {
         this._membrosLista.remover(...membro);
+        membro.forEach(m => {
+            if (m in )
+                ;
+        });
     }
     removerLivroPorId(...idLivro) {
         this._livroLista.remover(...idLivro);
