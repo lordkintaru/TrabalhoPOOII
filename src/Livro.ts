@@ -20,7 +20,7 @@ class Livro extends Item {
         }
     }
 
-    toString(): string {
+    public toString(): string {
         return super.tostring() + `, Categoria: ${this._categoria}`;
     }
 }

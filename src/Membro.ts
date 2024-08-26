@@ -46,17 +46,17 @@ abstract class Membro {
 
     }
 
-    adicionarEmprestimo(...emprestimo:Array<Item>): void {
+    public adicionarEmprestimo(...emprestimo:Array<Item>): void {
        this._emprestimos = [...this._emprestimos, ...emprestimo];
      
     }
-    removerEmprestimo(emprestimo: Item): void {
+    public removerEmprestimo(emprestimo: Item): void {
         this._emprestimos = this._emprestimos.filter((e) => e.id != emprestimo.id);
     }
-    buscarEmprestimoPorId(id: number): Item | undefined {
+    public buscarEmprestimoPorId(id: number): Item | undefined {
         return this._emprestimos.find((e) => e.id == id);
     }
-    toString(): string {
+    public toString(): string {
         return `ID: ${this._id}, Nome: ${this._nome}, Status: ${this._status}`;
     }
 }

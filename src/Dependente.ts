@@ -6,7 +6,7 @@ class Dependente extends Membro{
         super(nome,status);
     }
 
-    toString(): string {
+    public toString(): string {
         return super.toString();
     }
 

@@ -21,7 +21,7 @@ class Revista extends Item {
         }
     }
 
-    toString(): string {
+    public toString(): string {
         return super.tostring() + `, Data de publicação: ${this._dataPublicacao}`;
     }
 }

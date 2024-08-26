@@ -13,22 +13,22 @@ class MembroLista implements ILista {
         return this._membros;
     }
 
-    adicionar(...membros: Array<Membro>): void {
+    public adicionar(...membros: Array<Membro>): void {
         this._membros = [...this._membros, ...membros];
         
     }
 
-    remover(...idMembro: Array<number>): void {
+    public remover(...idMembro: Array<number>): void {
         idMembro.forEach(m => {
             this._membros = this._membros.filter(membro => membro.id != m);
         })
     }
 
-    buscarPorId(id: Number): Membro | undefined {
+    public buscarPorId(id: Number): Membro | undefined {
         return this._membros.find(membros => membros.id == id);
     }
 
-    toString(): string {
+    public toString(): string {
         return this._membros.toString();
     }
 

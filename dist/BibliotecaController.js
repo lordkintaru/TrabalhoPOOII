@@ -34,11 +34,17 @@ class BibliotecaController {
     adicionarMembro(membro) {
         this._membrosLista.adicionar(membro);
     }
-    removerMembroPorId(...membro) {
-        this._membrosLista.remover(...membro);
-        membro.forEach(m => {
-            if (m in )
-                ;
+    removerMembroPorId(...idMembro) {
+        idMembro.forEach(m => {
+            const membro = this._membrosLista.buscarPorId(m);
+            if (membro instanceof Dependente_1.default) {
+                this._membrosLista.membros.forEach(ml => {
+                    if (ml instanceof Titular_1.default) {
+                        ml.removerDependente(membro);
+                    }
+                });
+            }
+            this._membrosLista.remover(...idMembro);
         });
     }
     removerLivroPorId(...idLivro) {

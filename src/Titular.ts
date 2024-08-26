@@ -16,16 +16,16 @@ class Titular extends Membro{
     } 
 
 
-    adicionarDependente(...dependente: Array<Dependente> ) : void{
+    public adicionarDependente(...dependente: Array<Dependente> ) : void{
          this._dependentes = [...this._dependentes,...dependente]
         
 
     }
-    removerDependente(dependente: Dependente): void {
+    public removerDependente(dependente: Dependente): void {
         this._dependentes = this._dependentes.filter((d) => d.id != dependente.id);
     }
 
-    toString(): string {
+    public toString(): string {
         return super.toString() + `, Dependentes: ${this._dependentes}`;
     }
     

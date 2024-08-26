@@ -15,22 +15,22 @@ class RevistaLista implements ILista {
     }
 
 
-    adicionar(...revistas: Array<Revista>): void {
+    public adicionar(...revistas: Array<Revista>): void {
         this._revistas = [...this._revistas, ...revistas];
         
     }
 
-    remover(...idRevista: Array<number>): void {
+    public remover(...idRevista: Array<number>): void {
         idRevista.forEach(r => {
             this._revistas = this._revistas.filter(revista => revista.id != r);
         })
     }
 
-    buscarPorId(id: Number): Revista | undefined {
+    public buscarPorId(id: Number): Revista | undefined {
         return this._revistas.find(revista => revista.id == id);
     }
 
-    toString(): string {
+    public toString(): string {
         return this._revistas.toString();
     }
 

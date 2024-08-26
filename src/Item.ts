@@ -74,7 +74,7 @@ abstract class Item {
         }
     }
 
-    verificarAtraso(): boolean {
+    public verificarAtraso(): boolean {
         if(this._dataDevolucao == null){
             return false;
         }else if(this._dataDevolucao < new Date()){
@@ -83,7 +83,7 @@ abstract class Item {
             return false;
         }
     }
-    tostring(): string {
+    public tostring(): string {
         return `ID: ${this._id}, Titulo: ${this._titulo}, Autor: ${this._autor}, ISBN: ${this._ISBN}`;
     }
 }
