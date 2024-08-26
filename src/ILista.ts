@@ -1,8 +1,8 @@
 
 interface ILista {
     adicionar(...item: Array<any> ): void;
-    remover(...idItem: Array<any>): void;
-    buscarPorId(id: any): any | undefined;
+    remover(...idItem: Array<number>): void;
+    buscarPorId(id: number): any | undefined;
 }
 
 export default ILista;

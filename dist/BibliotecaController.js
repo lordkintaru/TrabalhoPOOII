@@ -28,8 +28,8 @@ class BibliotecaController {
     adicionarLivros(...livro) {
         this._livroLista.adicionar(...livro);
     }
-    adicionarRevista(revista) {
-        this._revistaLista.adicionar(revista);
+    adicionarRevista(...revista) {
+        this._revistaLista.adicionar(...revista);
     }
     adicionarMembro(membro) {
         this._membrosLista.adicionar(membro);

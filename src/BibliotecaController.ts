@@ -6,6 +6,7 @@ import Membro from "./Membro";
 import MembroLista from "./MembroLista";
 import Dependente from "./Dependente";
 import Titular from "./Titular";
+import ILista from "./ILista";
 
 class BibliotecaController {
     private _livroLista: LivroLista;
@@ -34,14 +35,16 @@ class BibliotecaController {
         this._livroLista.adicionar(...livro);
        
     }
-    public adicionarRevista(revista: Revista): void {
-        this._revistaLista.adicionar(revista);
+    public adicionarRevista(...revista: Array<Revista>): void {
+        this._revistaLista.adicionar(...revista);
        
     }
     public adicionarMembro(membro: Membro): void {
         this._membrosLista.adicionar(membro);
       
     }
+
+    
     public removerMembroPorId(...idMembro: Array<number>): void {
         idMembro.forEach(m => {
             const membro = this._membrosLista.buscarPorId(m);

@@ -59,6 +59,8 @@ try {
     biblioteca.devolverRevista(3, 5);//Fazendo devolucão de revistas com o membro inativo;
     biblioteca.devolverRevista(5, 11);
     console.log("\n");
+
+  
 } catch (e) {
     console.log(e);
 }
